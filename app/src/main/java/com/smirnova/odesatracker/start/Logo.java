@@ -13,7 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.smirnova.odesatracker.Constants;
+import com.smirnova.odesatracker.events.MainActivity;
 import com.smirnova.odesatracker.R;
 import com.smirnova.odesatracker.start.about.AboutMain;
 
@@ -64,23 +66,21 @@ public class Logo extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            if(FirebaseAuth.getInstance().getCurrentUser() != null ){
-//                Intent intent = new Intent(Logo.this, MainActivity.class);
-//
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//            }
-            //else{
-            Intent intent;
-            if (sharedPreferences.getBoolean(Constants.FIRST_LOAD, false)) {
-                intent = new Intent(Logo.this, Login.class);
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Intent intent = new Intent(Logo.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             } else {
-                intent = new Intent(Logo.this, AboutMain.class);
-            }
+                Intent intent;
+                if (sharedPreferences.getBoolean(Constants.FIRST_LOAD, false)) {
+                    intent = new Intent(Logo.this, SignUp.class);
+                } else {
+                    intent = new Intent(Logo.this, AboutMain.class);
+                }
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);//удаляем с памяти активити,
-            startActivity(intent);
-            //}
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
 
         }).start();
     }
