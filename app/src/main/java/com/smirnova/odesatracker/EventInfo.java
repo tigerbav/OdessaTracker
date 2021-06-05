@@ -2,20 +2,20 @@ package com.smirnova.odesatracker;
 
 public class EventInfo {
     private String category;
-    private double cost;
+    private String cost;
     private String date;
     private String description;
     private boolean like;
     private String link;
     private String location;
-    private double raiting;
+    private String raiting;
     private String type;
     private String time;
     private String event;
 
-    public EventInfo(String category, double cost, String date,
+    public EventInfo(String category, String cost, String date,
                      String description, boolean like, String link,
-                     String location, double raiting, String type,
+                     String location, String raiting, String type,
                      String time, String event) {
         this.category = category;
         this.cost = cost;
@@ -34,7 +34,7 @@ public class EventInfo {
         return category;
     }
 
-    public double getCost() {
+    public String getCost() {
         return cost;
     }
 
@@ -50,6 +50,10 @@ public class EventInfo {
         return like;
     }
 
+    public void setLike(boolean like) {
+        this.like = like;
+    }
+
     public String getLink() {
         return link;
     }
@@ -58,7 +62,7 @@ public class EventInfo {
         return location;
     }
 
-    public double getRaiting() {
+    public String getRaiting() {
         return raiting;
     }
 

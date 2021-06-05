@@ -18,4 +18,16 @@ public class Constants {
     public static final String TYPE = "Type";
     public static final String TIME = "time";
     public static final String EVENT = "Event";
+    public static final String CURRENT_POPULAR_EVENTS = "Current popular events";
+    public static final String POPULAR_PLACES_LAST = "The most popular places over the last week";
+
+
+    public static final String SAVED = "Saved events";
+
+    public static final String INTERESTS = "Interest";
+
+
+    public static final String MAIL = "Mail";
+    public static final String NAME = "Name";
+    public static final String USER = "Users";
 }

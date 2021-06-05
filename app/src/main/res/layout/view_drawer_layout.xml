@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="256dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingEnd="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/back_btn_slider"
+            android:layout_width="10dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/ic_back_btn" />
+
+        <CheckBox
+            android:id="@+id/checkBoxPark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:text="@string/parks_squares"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxMuseums"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/museums"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxAttractions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/attractions"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxСafes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cafes_restaurants"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxConcerts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/concerts"
+            android:textSize="16sp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCinemas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cinemas"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxCityEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/city_events"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxTheaters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theaters"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxExcursions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/excursions"
+            android:textSize="16sp" />
+
+
+        <CheckBox
+            android:id="@+id/checkBoxSelectAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_all"
+            android:textColor="#FF7530"
+            android:textSize="16sp" />
+
+
+        <Button
+            android:id="@+id/applyFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:background="@drawable/apply_back"
+            android:text="apply filters"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+</RelativeLayout>

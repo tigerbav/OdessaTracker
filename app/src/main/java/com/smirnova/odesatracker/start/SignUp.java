@@ -56,7 +56,7 @@ public class SignUp extends AppCompatActivity {
         });
 
         mAwesomeValidationNameEmailPassword.addValidation(SignUp.this, R.id.loginString, android.util.Patterns.EMAIL_ADDRESS, R.string.error_gmail);
-        mAwesomeValidationNameEmailPassword.addValidation(SignUp.this, R.id.nameString, "[a-zA-Z\\s]+", R.string.error_name);
+        mAwesomeValidationNameEmailPassword.addValidation(SignUp.this, R.id.nameString, "[a-zA-ZА-Яа-я\\s]+", R.string.error_name);
         mAwesomeValidationNameEmailPassword.addValidation(SignUp.this, R.id.passwordString, ".{6,}", R.string.password_error);
 
         signUp.setOnClickListener(v -> {

@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.smirnova.odesatracker.Constants;
 import com.smirnova.odesatracker.start.Login;
 import com.smirnova.odesatracker.R;
+import com.smirnova.odesatracker.start.SignUp;
 
 public class AboutMain extends AppCompatActivity {
     private ViewPager viewPager;
@@ -68,7 +69,7 @@ public class AboutMain extends AppCompatActivity {
 
                 editor.putBoolean(Constants.FIRST_LOAD, true);
                 editor.apply();
-                Intent intent = new Intent(AboutMain.this, Login.class);
+                Intent intent = new Intent(AboutMain.this, SignUp.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }

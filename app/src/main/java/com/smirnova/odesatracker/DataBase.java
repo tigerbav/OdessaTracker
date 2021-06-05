@@ -3,11 +3,11 @@ package com.smirnova.odesatracker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -21,12 +21,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.smirnova.odesatracker.events.ICallBack;
 import com.smirnova.odesatracker.events.MainActivity;
+import com.smirnova.odesatracker.events.NameEventScreen;
+import com.smirnova.odesatracker.events.UserInfo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -38,13 +44,40 @@ public class DataBase {
     private FirebaseUser mUser = mAuth.getCurrentUser();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private List<EventInfo> eventInfos;
+    private ICallBack callBack;
 
-    private SharedPreferences sharedPreferences;
+    public static List<Object> generalView;
+    public static List<Object> multiView;
+    public static List<Object> savedView;
+    public static List<Object> filterView;
+    public static List<EventInfo> eventInfoList;
+    public static List<String> interestList;
 
     private DataBase() {
-        eventInfos = new ArrayList<>();
+        generalView = new ArrayList<>();
+        multiView = new ArrayList<>();
+        savedView = new ArrayList<>();
+        filterView = new ArrayList<>();
+        eventInfoList = new ArrayList<>();
+        interestList = new ArrayList<>();
         requestToFirebase();
+        requestForCategory();
+
+    }
+
+    public void createUser() {
+        if(mUser.getEmail() != null)
+            db.collection(Constants.USER)
+            .document(mUser.getEmail())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            Map<String, Object> temp = task.getResult().getData();
+                            UserInfo.setMail((String) temp.get(Constants.MAIL));
+                            UserInfo.setName((String) temp.get(Constants.NAME));
+                        }
+                    });
     }
 
     static public DataBase createOrReturn() {
@@ -53,12 +86,24 @@ public class DataBase {
         return dataBaseFirebase;
     }
 
-    public void registration(String fullName, String gmailPhone, String password, Context context) {
-        mAuth.createUserWithEmailAndPassword(gmailPhone, password)
+    public void registration(String fullName, String gmail, String password, Context context) {
+        mAuth.createUserWithEmailAndPassword(gmail, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         //взятие данных зарегестрированного пользователя из Firebase в текущее приложение
                         mUser = mAuth.getCurrentUser();
+
+                        Map<String, String> generalTask = new HashMap<>();
+                        generalTask.put(Constants.MAIL, gmail);
+                        generalTask.put(Constants.NAME, fullName);
+
+                        if (mUser.getEmail() != null) {
+                            db.collection(Constants.USER)
+                                    .document(gmail)
+                                    .set(generalTask);
+                        }
+
+
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         context.startActivity(intent);
@@ -68,6 +113,8 @@ public class DataBase {
                     }
 
                 });
+
+
     }
 
     public void signIn(String gmail, String password, Context context) {
@@ -141,27 +188,91 @@ public class DataBase {
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Map<String, Object> temp = document.getData();
                                 EventInfo eventInfo = new EventInfo((String) temp.get(Constants.CATEGORY),
-                                        (Long) temp.get(Constants.COST),
-                                        (String)temp.get(Constants.DATE),
-                                        (String)temp.get(Constants.DESCRIPTION),
+                                        (String) temp.get(Constants.COST),
+                                        (String) temp.get(Constants.DATE),
+                                        (String) temp.get(Constants.DESCRIPTION),
                                         (Boolean) temp.get(Constants.LIKE),
-                                        (String)temp.get(Constants.LINK),
-                                        (String)temp.get(Constants.LOCATION),
-                                        (Double)temp.get(Constants.RAITING),
-                                        (String)temp.get(Constants.TYPE),
-                                        (String)temp.get(Constants.TIME),
+                                        (String) temp.get(Constants.LINK),
+                                        (String) temp.get(Constants.LOCATION),
+                                        (String) temp.get(Constants.RAITING),
+                                        (String) temp.get(Constants.TYPE),
+                                        (String) temp.get(Constants.TIME),
                                         document.getId());
 
-                                eventInfos.add(eventInfo);
+                                eventInfoList.add(eventInfo);
 
                             }
                         } else {
                             Log.d("Error read", "Error getting documents: ", task.getException());
                         }
-
-                        System.out.println(eventInfos);
+                        createMultipleList();
+                        setSavedList();
+                        if (callBack != null) {
+                            callBack.setList();
+                        }
                     }
                 });
+    }
 
+    public void requestForCategory() {
+        db.collection(Constants.INTERESTS)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                Map<String, Object> temp = document.getData();
+                                final Object s = temp.get(Constants.INTERESTS);
+                                interestList.addAll(Arrays.asList(s.toString().replace("]", "").replace("[", "").split(",")));
+
+                            }
+                        } else {
+                            Log.d("Error read", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void createFilterList(String category) {
+        boolean flag = true;
+        for (EventInfo eventInfo : eventInfoList) {
+            System.out.println(eventInfo.getCategory().toLowerCase() + "    " + category.toLowerCase());
+            if (category.toLowerCase().contains(eventInfo.getCategory().toLowerCase())) {
+                if (flag) {
+                    flag = false;
+                    filterView.add(new NameEventScreen(category));
+                }
+                filterView.add(eventInfo);
+            }
+        }
+
+    }
+
+    private void createListVisible(String val) {
+        multiView.add(new NameEventScreen(val));
+        for (EventInfo event : eventInfoList) {
+            if (event.getType().equals(val)) {
+                multiView.add(event);
+            }
+        }
+    }
+
+    private void createMultipleList() {
+        createListVisible(Constants.CURRENT_POPULAR_EVENTS);
+        createListVisible(Constants.POPULAR_PLACES_LAST);
+    }
+
+    private void setSavedList() {
+        savedView.add(new NameEventScreen(Constants.SAVED));
+        for (EventInfo event : eventInfoList) {
+            if (event.isLike()) {
+                savedView.add(event);
+            }
+        }
+    }
+
+    public void setCallBack(ICallBack iCallBack) {
+        callBack = iCallBack;
     }
 }
