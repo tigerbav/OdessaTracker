@@ -23,6 +23,7 @@ public class NavigationLayout extends RelativeLayout {
     private CheckBox concerts;
     private CheckBox cafes;
     private Button back;
+
     private Button apply;
 
     public static int counter = 0;

@@ -90,12 +90,11 @@ public class AboutMain extends AppCompatActivity {
         });
 
 
-
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.alpha));
         tabLayout.setupWithViewPager(viewPager);
         for (int i = 0; i < 3; i++) {
-            if(i == 0)
+            if (i == 0)
                 tabLayout.getTabAt(i).setIcon(R.drawable.ic_ellipse_taken);
             else
                 tabLayout.getTabAt(i).setIcon(R.drawable.ic_ellipse_untake);
@@ -111,19 +110,20 @@ public class AboutMain extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < 3; i++) {
-                    if(position == i)
+                    if (position == i) {
                         tabLayout.getTabAt(i).setIcon(R.drawable.ic_ellipse_taken);
-                    else
+                    } else {
                         tabLayout.getTabAt(i).setIcon(R.drawable.ic_ellipse_untake);
+                    }
+
                 }
 
-                if(position == 2) {
+                if (position == 2) {
                     startBtn.setVisibility(View.VISIBLE);
                     rightBtn.setVisibility(View.GONE);
-                } else if(position == 0) {
+                } else if (position == 0) {
                     leftBtn.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     rightBtn.setVisibility(View.VISIBLE);
                     leftBtn.setVisibility(View.VISIBLE);
                 }

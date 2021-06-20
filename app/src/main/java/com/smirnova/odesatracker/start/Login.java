@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity {
         mAwesomeValidationEmailPassword.addValidation(Login.this, R.id.loginString, android.util.Patterns.EMAIL_ADDRESS, R.string.error_gmail);
         mAwesomeValidationEmailPassword.addValidation(Login.this, R.id.passwordString, ".{6,}", R.string.password_error);
 
-        backBtn.setOnClickListener(v -> Login.super.onBackPressed());
+        backBtn.setOnClickListener(v -> super.onBackPressed());
 
         login.setOnClickListener(v -> {
             if (mAwesomeValidationEmailPassword.validate()) {

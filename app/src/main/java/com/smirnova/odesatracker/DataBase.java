@@ -62,7 +62,6 @@ public class DataBase {
         interestList = new ArrayList<>();
         requestToFirebase();
         requestForCategory();
-
     }
 
     public void createUser() {
@@ -237,7 +236,6 @@ public class DataBase {
     public void createFilterList(String category) {
         boolean flag = true;
         for (EventInfo eventInfo : eventInfoList) {
-            System.out.println(eventInfo.getCategory().toLowerCase() + "    " + category.toLowerCase());
             if (category.toLowerCase().contains(eventInfo.getCategory().toLowerCase())) {
                 if (flag) {
                     flag = false;
