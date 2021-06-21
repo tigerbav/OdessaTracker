@@ -177,4 +177,16 @@ public class MainActivity extends AppCompatActivity implements CallExitSlider {
             super.onBackPressed();
         }
     }
+
+    @Override
+    protected void onPause() {
+        dataBase.setSavedListToDB();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+    }
 }

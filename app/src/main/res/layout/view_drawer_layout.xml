@@ -28,7 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="45dp"
             android:text="@string/parks_squares"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -36,7 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/museums"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -44,7 +48,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/attractions"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -52,7 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cafes_restaurants"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -60,14 +68,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/concerts"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
         <CheckBox
             android:id="@+id/checkBoxCinemas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cinemas"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -75,7 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/city_events"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -83,7 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/theaters"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -91,7 +107,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/excursions"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <CheckBox
@@ -100,7 +118,9 @@
             android:layout_height="wrap_content"
             android:text="@string/select_all"
             android:textColor="#FF7530"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+             android:button="@drawable/checkbox_selector"
+            android:padding="6dp"/>
 
 
         <Button

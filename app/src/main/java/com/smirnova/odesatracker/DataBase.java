@@ -7,7 +7,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -236,6 +235,9 @@ public class DataBase {
     public void createFilterList(String category) {
         boolean flag = true;
         for (EventInfo eventInfo : eventInfoList) {
+            if(eventInfo.getCategory() == null) {
+                continue;
+            }
             if (category.toLowerCase().contains(eventInfo.getCategory().toLowerCase())) {
                 if (flag) {
                     flag = false;
@@ -268,9 +270,38 @@ public class DataBase {
                 savedView.add(event);
             }
         }
+
+
     }
 
     public void setCallBack(ICallBack iCallBack) {
         callBack = iCallBack;
+    }
+
+    public void setSavedListToDB() {
+        Map<String, Object> generalTask = new HashMap<>();
+        generalTask.put(Constants.MAIL, UserInfo.getMail());
+        generalTask.put(Constants.NAME, UserInfo.getName());
+        String[] list = new String[savedView.size() - 1];
+        for(int i = 1; i < savedView.size(); i++) {
+            EventInfo eventInfo = (EventInfo) savedView.get(i);
+            list[i-1] = eventInfo.getEvent();
+        }
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i < list.length; i++) {
+            if(i + 1 == list.length) {
+                str.append(list[i]);
+            } else {
+                str.append(list[i]).append(",");
+            }
+
+        }
+        generalTask.put(Constants.SAVED, str.toString());
+
+        if (mUser.getEmail() != null) {
+            db.collection(Constants.USER)
+                    .document(UserInfo.getMail())
+                    .set(generalTask);
+        }
     }
 }
